@@ -9,7 +9,7 @@ from tensorflow.keras.layers import (
     MaxPooling3D,
     Concatenate,
 )
-from tensorflow.keras.layers import concatenate, add, drop
+from tensorflow.keras.layers import concatenate, add
 from tensorflow.keras import backend as K
 
 
