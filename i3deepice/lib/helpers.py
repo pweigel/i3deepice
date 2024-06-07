@@ -6,10 +6,24 @@ def get_t0(pulses):
     time = []
     charge = []
     for i in pulses:
+        # print(i)
         for j in i[1]:
             charge.append(j.charge)
-            time.append(j.time)
-    return median(time, weights=charge)
+            time.append(j.time) # + np.random.randn()*1e-6) # what a fudge factor...
+            
+    # Now we check for pulses at the same time
+    unique_times = set(time)
+    new_time = []
+    new_charge = []
+    for t in unique_times:
+        new_time.append(t)
+        _charge = 0
+        for idx, _t in enumerate(time):
+            if t == _t:
+                _charge += charge[idx] 
+        new_charge.append(_charge)
+    # print(np.sum(new_charge), np.sum(charge))
+    return median(new_time, weights=new_charge)
 
 
 def median(arr, weights=None):
@@ -17,6 +31,7 @@ def median(arr, weights=None):
         weights = 1. * np.array(weights)
     else:
         weights = np.ones(len(arr))
+    # print(len(set(arr)), len(arr))
     rv = st.rv_discrete(values=(arr, weights / weights.sum()))
     return rv.median()
 

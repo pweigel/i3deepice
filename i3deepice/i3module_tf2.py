@@ -145,7 +145,8 @@ class DeepLearningModule(icetray.I3ConditionalModule):
         config.gpu_options.allow_growth = True
         self.sess = tf.compat.v1.Session(config=config, graph=tf.compat.v1.get_default_graph())
         self.graph = tf.compat.v1.get_default_graph()
-        tf.compat.v1.keras.backend.set_session(self.sess)
+        # tf.compat.v1.keras.backend.set_session(self.sess)
+        # keras.backend.set_session(self.sess)
         self.__model.load_weights(os.path.join(dirname, 'models/{}/weights.h5'.format(self.GetParameter("model"))))
         return
 
@@ -232,7 +233,8 @@ class DeepLearningModule(icetray.I3ConditionalModule):
                                 inp[1](eval(inp[0]))
                 f_slices.append(f_slice)
                 benchmark_times.append(time.time())
-            tf.compat.v1.keras.backend.set_session(self.sess)
+            # tf.compat.v1.keras.backend.set_session(self.sess)
+            # keras.backend.set_session(self.sess)
             try:
                 predictions = self.__model.predict(np.array(np.squeeze(f_slices,
                                                                        axis=1),
